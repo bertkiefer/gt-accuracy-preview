@@ -153,6 +153,8 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
   object-fit: cover;
   object-position: center 55%;
   display: block;
+  /* Match the editorial filter used on the shop photo: slight desaturation + contrast */
+  filter: grayscale(0.05) contrast(1.02);
 }
 .hero-overlay {
   position: absolute; inset: 0;

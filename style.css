@@ -286,11 +286,29 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 .shop-img {
   position: relative;
 }
+.shop-img-frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.shop-img-frame::after {
+  /* Left-edge gradient: fades the image into the page background */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    var(--bg) 0%,
+    rgba(250, 247, 240, 0.55) 8%,
+    rgba(250, 247, 240, 0) 22%
+  );
+  pointer-events: none;
+}
 .shop-img img {
   width: 100%;
-  aspect-ratio: 4/5;
+  aspect-ratio: 4/3;
   object-fit: cover;
-  border-radius: 2px;
+  display: block;
   filter: grayscale(0.05) contrast(1.02);
 }
 .img-caption {

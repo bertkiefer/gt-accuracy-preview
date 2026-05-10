@@ -158,21 +158,12 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 }
 .hero-overlay {
   position: absolute; inset: 0;
-  /* Two fades stacked: bottom into the page, and left edge into the page,
-     so the image bleeds in instead of sitting in a hard rectangle. */
-  background:
-    linear-gradient(
-      180deg,
-      rgba(250, 247, 240, 0) 60%,
-      rgba(250, 247, 240, 0.55) 85%,
-      var(--bg) 100%
-    ),
-    linear-gradient(
-      90deg,
-      var(--bg) 0%,
-      rgba(250, 247, 240, 0.55) 8%,
-      rgba(250, 247, 240, 0) 22%
-    );
+  background: linear-gradient(
+    180deg,
+    rgba(250, 247, 240, 0) 60%,
+    rgba(250, 247, 240, 0.55) 85%,
+    var(--bg) 100%
+  );
   pointer-events: none;
 }
 .hero-inner {

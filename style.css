@@ -383,6 +383,82 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 @media (max-width: 1000px) { .featured-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px)  { .featured-grid { grid-template-columns: 1fr; } }
 
+/* ── CATALOG PAGE HERO (catalog.html) ────────── */
+.catalog-hero {
+  padding: 180px 0 60px;
+  background: var(--bg-2);
+  border-bottom: 1px solid var(--rule);
+}
+.catalog-hero .hero-meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.catalog-hero .hero-meta .m {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+}
+.catalog-hero .hero-meta .v {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--text);
+  letter-spacing: 0.06em;
+  padding-right: 14px;
+  border-right: 1px solid var(--rule);
+}
+.catalog-hero .hero-meta .v:last-child { border-right: none; }
+.catalog-title {
+  font-family: "Inter Tight", "Inter", sans-serif;
+  font-weight: 300;
+  font-size: clamp(40px, 6vw, 78px);
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  margin: 0 0 18px;
+}
+.catalog-lede {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 720px;
+  margin-bottom: 32px;
+}
+.catalog-jump {
+  padding-top: 22px;
+  border-top: 1px solid var(--rule);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  line-height: 2;
+  color: var(--muted);
+}
+.catalog-jump a {
+  color: var(--text);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.15s, color 0.15s;
+}
+.catalog-jump a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+.product-meta .sub {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: block;
+  margin: 4px 0 12px;
+}
+
+.nav-links a.active {
+  color: var(--accent);
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
+}
+
 /* ── CATALOG ─────────────────────────────────── */
 .catalog { padding: 120px 0; }
 .catalog-group { margin-top: 56px; }

@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>GT Accuracy — Design Directions</title>
+<link rel="icon" href="assets/images/gt-mark.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Inter+Tight:wght@300;400;500;700;900&family=Playfair+Display:wght@400;500;700&family=JetBrains+Mono:wght@300;400;500&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: #1a1a1a; color: #eee;
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .top {
+    padding: 60px 40px 40px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+  }
+  .top h1 {
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 900;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .top p { color: #aaa; font-size: 15px; max-width: 700px; margin: 0 auto; }
+  .top .legend { margin-top: 26px; font-size: 12px; color: #888; }
+
+  .direction {
+    padding: 60px 0;
+    border-bottom: 1px solid #333;
+  }
+  .direction-meta {
+    max-width: 1100px;
+    margin: 0 auto 24px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .direction-meta .label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: #888;
+    letter-spacing: 0.1em;
+  }
+  .direction-meta h2 {
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: -0.01em;
+    margin-top: 4px;
+    color: #fff;
+  }
+  .direction-meta .pick {
+    font-family: "Inter", sans-serif;
+    font-size: 12px;
+    padding: 8px 16px;
+    border: 1px solid #555;
+    border-radius: 2px;
+    color: #ccc;
+  }
+
+  .preview {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+  .preview-stage {
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+  }
+  .swatches {
+    display: flex;
+    gap: 0;
+    margin-top: 14px;
+    height: 14px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .sw { flex: 1; }
+  .footer-meta {
+    max-width: 1100px;
+    margin: 18px auto 0;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 30px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: #888;
+  }
+  .footer-meta strong { color: #ddd; font-weight: 500; }
+
+  /* ═══════════════════════════════════════════════════════
+     OPTION A — SWISS TECHNICAL
+     White, charcoal, single bronze accent. Vortex Optics / Bossart vibe.
+     ═══════════════════════════════════════════════════════ */
+  .opt-a {
+    background: #F5F5F5;
+    color: #111;
+    padding: 70px 60px 80px;
+    min-height: 560px;
+    position: relative;
+    font-family: "Inter Tight", sans-serif;
+  }
+  .opt-a .grid-ruler { position: absolute; top: 0; left: 0; right: 0; height: 1px; background: #111; }
+  .opt-a .top-row {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid #c8c8c8; padding-bottom: 18px; margin-bottom: 70px;
+  }
+  .opt-a .logo-mark { height: 28px; }
+  .opt-a .nav { display: flex; gap: 28px; }
+  .opt-a .nav span { font-family: "Inter", sans-serif; font-weight: 500; font-size: 12px; letter-spacing: 0.04em; color: #555; }
+  .opt-a .phone { font-family: "JetBrains Mono", monospace; font-size: 12px; color: #111; letter-spacing: 0.04em; }
+  .opt-a h1 {
+    font-weight: 700;
+    font-size: 82px;
+    line-height: 0.94;
+    letter-spacing: -0.035em;
+    margin-bottom: 28px;
+  }
+  .opt-a .sub {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    color: #8B6841;
+    letter-spacing: 0.04em;
+    margin-bottom: 50px;
+  }
+  .opt-a .specs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+  .opt-a .spec { border-top: 1px solid #c8c8c8; padding-top: 14px; }
+  .opt-a .spec-val { font-weight: 700; font-size: 28px; letter-spacing: -0.02em; }
+  .opt-a .spec-lbl { font-family: "JetBrains Mono", monospace; font-size: 10px; color: #777; margin-top: 6px; letter-spacing: 0.08em; }
+
+  /* ═══════════════════════════════════════════════════════
+     OPTION B — EDITORIAL LUXURY
+     Cream base, serif display, lots of negative space. Patek vibe.
+     ═══════════════════════════════════════════════════════ */
+  .opt-b {
+    background: #F2EDE5;
+    color: #1F1812;
+    padding: 90px 70px 100px;
+    min-height: 560px;
+    font-family: "Inter", sans-serif;
+  }
+  .opt-b .top-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 100px;
+  }
+  .opt-b .logo-mark { height: 30px; }
+  .opt-b .menu { font-size: 11px; letter-spacing: 0.20em; color: #6B4A2A; }
+  .opt-b h1 {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 400;
+    font-size: 92px;
+    line-height: 1.0;
+    letter-spacing: -0.005em;
+    margin-bottom: 36px;
+    max-width: 700px;
+  }
+  .opt-b h1 em { font-style: italic; color: #6B4A2A; font-weight: 400; }
+  .opt-b .sub { font-size: 14px; color: #6B4A2A; letter-spacing: 0.22em; margin-bottom: 50px; }
+  .opt-b .body { font-size: 17px; line-height: 1.55; color: #3a2f23; max-width: 540px; margin-bottom: 30px; }
+  .opt-b .cta { font-family: "Inter", sans-serif; font-size: 12px; letter-spacing: 0.22em; color: #1F1812; border-bottom: 1px solid #1F1812; padding-bottom: 3px; }
+
+  /* ═══════════════════════════════════════════════════════
+     OPTION C — ENGINEERING / SPEC SHEET
+     Pale gray, mono accents, datasheet feel. Trijicon / Sig Premium vibe.
+     ═══════════════════════════════════════════════════════ */
+  .opt-c {
+    background: #ECEEF0;
+    color: #1A1D23;
+    padding: 60px 60px 70px;
+    min-height: 560px;
+    font-family: "Inter", sans-serif;
+    position: relative;
+  }
+  .opt-c .top-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 24px; border-bottom: 1px solid #1A1D23; margin-bottom: 60px;
+  }
+  .opt-c .logo-mark { height: 28px; }
+  .opt-c .meta {
+    font-family: "JetBrains Mono", monospace; font-size: 10px;
+    color: #4A5159; letter-spacing: 0.06em;
+  }
+  .opt-c .meta span { color: #A56A36; }
+  .opt-c h1 {
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 300;
+    font-size: 76px;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    margin-bottom: 36px;
+  }
+  .opt-c h1 b { font-weight: 800; }
+  .opt-c .sub {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px; color: #A56A36;
+    letter-spacing: 0.08em;
+    margin-bottom: 50px;
+  }
+  .opt-c .data-row {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;
+    border-top: 1px solid #c4c9d0; padding-top: 22px;
+  }
+  .opt-c .data-cell .k {
+    font-family: "JetBrains Mono", monospace; font-size: 10px;
+    color: #4A5159; letter-spacing: 0.10em; margin-bottom: 6px;
+  }
+  .opt-c .data-cell .v {
+    font-family: "Inter Tight", sans-serif; font-weight: 600;
+    font-size: 22px; letter-spacing: -0.02em;
+  }
+
+  /* ═══════════════════════════════════════════════════════
+     OPTION D — PRECISION MINIMAL
+     Warm white, single gold accent, maximum negative space.
+     ═══════════════════════════════════════════════════════ */
+  .opt-d {
+    background: #FBF8F3;
+    color: #1A130A;
+    padding: 80px 60px 90px;
+    min-height: 560px;
+    font-family: "Inter", sans-serif;
+  }
+  .opt-d .top-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 130px;
+  }
+  .opt-d .logo-mark { height: 32px; }
+  .opt-d .small-nav { font-size: 11px; letter-spacing: 0.18em; color: #6a5238; }
+  .opt-d h1 {
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 700;
+    font-size: 70px;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+    margin-bottom: 28px;
+    max-width: 760px;
+  }
+  .opt-d h1 .gold { color: #B98D55; }
+  .opt-d .sub {
+    font-size: 13px;
+    color: #6a5238;
+    letter-spacing: 0.16em;
+    margin-bottom: 60px;
+  }
+  .opt-d .rule {
+    width: 60px; height: 2px; background: #B98D55; margin-bottom: 20px;
+  }
+  .opt-d .footer-strip {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 28px; border-top: 1px solid #d4c9b3;
+  }
+  .opt-d .footer-strip span {
+    font-family: "Inter", sans-serif; font-size: 11px;
+    color: #6a5238; letter-spacing: 0.10em;
+  }
+  .opt-d .footer-strip .yr { font-family: "JetBrains Mono", monospace; }
+
+  @media (max-width: 760px) {
+    .opt-a, .opt-b, .opt-c, .opt-d { padding-left: 28px; padding-right: 28px; }
+    .opt-a h1, .opt-b h1, .opt-c h1, .opt-d h1 { font-size: 52px; }
+    .opt-a .specs, .opt-c .data-row { grid-template-columns: repeat(2, 1fr); }
+    .footer-meta { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Header ─────────────────────────────────────────── -->
+<div class="top">
+  <h1>DESIGN DIRECTIONS</h1>
+  <p>Four different visual languages for the GT Accuracy homepage. Each uses the same logo but a different palette, typography, and layout tone. Pick the one that matches the level and feel you want — I rebuild the site in that direction.</p>
+  <div class="legend">No big rifle photos in any of these. Brothers Bold reserved for the logo only.</div>
+</div>
+
+<!-- ── A — SWISS TECHNICAL ───────────────────────────── -->
+<section class="direction">
+  <div class="direction-meta">
+    <div>
+      <div class="label">OPTION A</div>
+      <h2>SWISS TECHNICAL</h2>
+    </div>
+    <div class="pick">Vortex Optics · Bossart Rifles vibe</div>
+  </div>
+  <div class="preview">
+    <div class="preview-stage">
+      <div class="opt-a">
+        <div class="grid-ruler"></div>
+        <div class="top-row">
+          <img class="logo-mark" src="assets/images/logo.png" alt="GT Accuracy" />
+          <div class="nav">
+            <span>RIFLES</span><span>COMPONENTS</span><span>SHOP</span><span>CONTACT</span>
+          </div>
+          <div class="phone">+1 570 721 6550</div>
+        </div>
+        <h1>Precision,<br/>engineered to <span style="color:#8B6841">exacting tolerance</span>.</h1>
+        <div class="sub">CUSTOM RIFLE WORKS — WYALUSING, PA — EST. 2009</div>
+        <div class="specs">
+          <div class="spec"><div class="spec-val">15+</div><div class="spec-lbl">YEARS</div></div>
+          <div class="spec"><div class="spec-val">.001"</div><div class="spec-lbl">TOLERANCE</div></div>
+          <div class="spec"><div class="spec-val">5</div><div class="spec-lbl">CNC MACHINES</div></div>
+          <div class="spec"><div class="spec-val">∞</div><div class="spec-lbl">DETAIL</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="swatches">
+      <div class="sw" style="background:#F5F5F5"></div>
+      <div class="sw" style="background:#E0E0E0"></div>
+      <div class="sw" style="background:#8B6841"></div>
+      <div class="sw" style="background:#555"></div>
+      <div class="sw" style="background:#111"></div>
+    </div>
+    <div class="footer-meta">
+      <div><strong>Feel</strong> Engineering datasheet — like a Vortex / Schmidt &amp; Bender / Bossart product page. White space, precise grids, single bronze accent. Conveys "we measured it three times."</div>
+      <div><strong>Type</strong> Inter Tight + JetBrains Mono for specs</div>
+      <div><strong>Palette</strong> White, charcoal, bronze accent only</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── B — EDITORIAL LUXURY ──────────────────────────── -->
+<section class="direction">
+  <div class="direction-meta">
+    <div>
+      <div class="label">OPTION B</div>
+      <h2>EDITORIAL LUXURY</h2>
+    </div>
+    <div class="pick">Patek Philippe · Audemars Piguet · Holland &amp; Holland</div>
+  </div>
+  <div class="preview">
+    <div class="preview-stage">
+      <div class="opt-b">
+        <div class="top-row">
+          <img class="logo-mark" src="assets/images/logo.png" alt="GT Accuracy" />
+          <div class="menu">RIFLES — SHOP — JOURNAL — VISIT</div>
+        </div>
+        <div class="sub">CRAFTED IN WYALUSING, PENNSYLVANIA</div>
+        <h1>Built one at a time —<br/>by hand, <em>by Greg</em>.</h1>
+        <p class="body">Fifteen years on a single workshop floor. Every barrel chambered, every action trued, every stock bedded under the same eye. The rifles leave with a measurement; the customers leave with a story.</p>
+        <a class="cta" href="#">DISCOVER THE WORKSHOP →</a>
+      </div>
+    </div>
+    <div class="swatches">
+      <div class="sw" style="background:#F2EDE5"></div>
+      <div class="sw" style="background:#E5DBC8"></div>
+      <div class="sw" style="background:#B58951"></div>
+      <div class="sw" style="background:#6B4A2A"></div>
+      <div class="sw" style="background:#1F1812"></div>
+    </div>
+    <div class="footer-meta">
+      <div><strong>Feel</strong> Heritage luxury — like a fine watchmaker's site. Restrained color, generous space, serif display type, italicized accent words. Says "this is a craft, not a commodity."</div>
+      <div><strong>Type</strong> Cormorant Garamond + Inter</div>
+      <div><strong>Palette</strong> Cream, deep bronze, near-black</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── C — ENGINEERING / SPEC-SHEET ──────────────────── -->
+<section class="direction">
+  <div class="direction-meta">
+    <div>
+      <div class="label">OPTION C</div>
+      <h2>ENGINEERING SPEC-SHEET</h2>
+    </div>
+    <div class="pick">Trijicon · Lapua · Sig Sauer Premium</div>
+  </div>
+  <div class="preview">
+    <div class="preview-stage">
+      <div class="opt-c">
+        <div class="top-row">
+          <img class="logo-mark" src="assets/images/logo.png" alt="GT Accuracy" />
+          <div class="meta">FILE: <span>HOMEPAGE.000</span> — REV: <span>2026.05</span></div>
+        </div>
+        <div class="sub">SHEET 01 / SPECIFICATIONS / GT-ACCURACY-CUSTOM</div>
+        <h1>Each rifle a <b>specification</b>.<br/>Each shot a <b>verification</b>.</h1>
+        <div class="data-row">
+          <div class="data-cell"><div class="k">YEARS IN PRODUCTION</div><div class="v">15+</div></div>
+          <div class="data-cell"><div class="k">MEASURED TOLERANCE</div><div class="v">±0.001 IN</div></div>
+          <div class="data-cell"><div class="k">DISCIPLINES</div><div class="v">BR · F-OPEN · F-TR · HUNT</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="swatches">
+      <div class="sw" style="background:#ECEEF0"></div>
+      <div class="sw" style="background:#c4c9d0"></div>
+      <div class="sw" style="background:#A56A36"></div>
+      <div class="sw" style="background:#4A5159"></div>
+      <div class="sw" style="background:#1A1D23"></div>
+    </div>
+    <div class="footer-meta">
+      <div><strong>Feel</strong> Tactical / aerospace datasheet — like a Trijicon or Lapua product page. File numbers, revision marks, monospace metadata, hairline rules. Says "this is precise instrumentation."</div>
+      <div><strong>Type</strong> Inter Tight + JetBrains Mono</div>
+      <div><strong>Palette</strong> Pale gray, gunmetal, copper accent</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── D — PRECISION MINIMAL ─────────────────────────── -->
+<section class="direction">
+  <div class="direction-meta">
+    <div>
+      <div class="label">OPTION D</div>
+      <h2>PRECISION MINIMAL</h2>
+    </div>
+    <div class="pick">Linear · Stripe · Ableton — but warm</div>
+  </div>
+  <div class="preview">
+    <div class="preview-stage">
+      <div class="opt-d">
+        <div class="top-row">
+          <img class="logo-mark" src="assets/images/logo.png" alt="GT Accuracy" />
+          <div class="small-nav">RIFLES — COMPONENTS — STORY — VISIT</div>
+        </div>
+        <div class="rule"></div>
+        <h1>Custom rifles, built for shooters who <span class="gold">measure their groups</span> in fractions of an inch.</h1>
+        <div class="sub">WYALUSING, PENNSYLVANIA — BY APPOINTMENT &amp; WALK-IN</div>
+        <div class="footer-strip">
+          <span>+1 570 721 6550</span>
+          <span class="yr">EST. 2009</span>
+        </div>
+      </div>
+    </div>
+    <div class="swatches">
+      <div class="sw" style="background:#FBF8F3"></div>
+      <div class="sw" style="background:#E8DFCB"></div>
+      <div class="sw" style="background:#B98D55"></div>
+      <div class="sw" style="background:#6a5238"></div>
+      <div class="sw" style="background:#1A130A"></div>
+    </div>
+    <div class="footer-meta">
+      <div><strong>Feel</strong> Modern minimal SaaS-style done warm — lots of negative space, one bold typographic statement, gold accent for emphasis. Says "we don't shout; we don't need to."</div>
+      <div><strong>Type</strong> Inter Tight + JetBrains Mono accent</div>
+      <div><strong>Palette</strong> Warm white, muted gold, rich brown-black</div>
+    </div>
+  </div>
+</section>
+
+<div style="text-align:center;padding:50px 30px 70px;color:#888;font-size:13px;">
+  Tell Bert which option you want and the full site rebuilds in that direction.
+</div>
+
+</body>
+</html>

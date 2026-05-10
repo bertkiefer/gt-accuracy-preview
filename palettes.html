@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>GT Accuracy — Swiss Technical Palette Options</title>
+<link rel="icon" href="assets/images/gt-mark.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Inter+Tight:wght@300;400;500;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #1a1a1a; color: #eee;
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .top {
+    padding: 60px 40px 36px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+  }
+  .top h1 {
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+  .top p { color: #aaa; font-size: 15px; max-width: 700px; margin: 0 auto; }
+
+  .direction { padding: 50px 0; border-bottom: 1px solid #333; }
+  .direction-meta {
+    max-width: 1100px;
+    margin: 0 auto 22px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .direction-meta .label {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px; color: #888; letter-spacing: 0.1em;
+  }
+  .direction-meta h2 {
+    font-family: "Inter Tight", sans-serif;
+    font-weight: 700; font-size: 24px; color: #fff;
+    letter-spacing: -0.01em; margin-top: 4px;
+  }
+  .direction-meta .note { color: #aaa; font-size: 13px; max-width: 560px; }
+
+  .preview { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+  .preview-stage { border-radius: 4px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+  .swatches {
+    display: flex; gap: 0; margin-top: 14px; height: 14px; border-radius: 2px; overflow: hidden;
+  }
+  .sw { flex: 1; }
+  .meta-row {
+    max-width: 1100px; margin: 14px auto 0; padding: 0 40px;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; color: #888; letter-spacing: 0.04em;
+  }
+  .meta-row strong { color: #ddd; font-weight: 500; }
+
+  /* ── Swiss Technical hero — common layout, palette varies via CSS variables ── */
+  .hero {
+    padding: 60px 60px 70px;
+    min-height: 540px;
+    position: relative;
+    font-family: "Inter Tight", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+  .hero .grid-ruler { position: absolute; top:0; left:0; right:0; height:1px; background: var(--text); }
+  .hero .top-row {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--rule); padding-bottom: 18px; margin-bottom: 64px;
+  }
+  .hero .logo-mark { height: 28px; filter: var(--logo-filter, none); }
+  .hero .nav { display: flex; gap: 28px; }
+  .hero .nav span {
+    font-family: "Inter", sans-serif;
+    font-weight: 500; font-size: 12px;
+    letter-spacing: 0.04em; color: var(--muted);
+  }
+  .hero .phone {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px; letter-spacing: 0.04em; color: var(--text);
+  }
+  .hero h1 {
+    font-weight: 700; font-size: 78px; line-height: 0.94;
+    letter-spacing: -0.035em; margin-bottom: 28px;
+  }
+  .hero h1 .accent { color: var(--accent); }
+  .hero .sub {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px; color: var(--accent);
+    letter-spacing: 0.04em; margin-bottom: 50px;
+  }
+  .hero .specs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+  .hero .spec { border-top: 1px solid var(--rule); padding-top: 14px; }
+  .hero .spec-val { font-weight: 700; font-size: 26px; letter-spacing: -0.02em; }
+  .hero .spec-lbl {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px; color: var(--muted);
+    margin-top: 6px; letter-spacing: 0.08em;
+  }
+
+  /* ── Palette definitions ─────────────────────────── */
+  .p1 { --bg: #F5F5F5; --text: #111111; --muted: #555; --rule: #c8c8c8; --accent: #8B6841; }       /* Bronze (original) */
+  .p2 { --bg: #FAF7F0; --text: #2A1E13; --muted: #6B5A48; --rule: #d8cdb8; --accent: #A88030; }    /* Walnut + Brass */
+  .p3 { --bg: #F0F2F5; --text: #1C2530; --muted: #5A6470; --rule: #c4cad3; --accent: #A56A36; }    /* Steel + Copper */
+  .p4 { --bg: #FAFAFA; --text: #1A1A1A; --muted: #555; --rule: #d0d0d0; --accent: #7E2F3D; }       /* Charcoal + Burgundy */
+  .p5 { --bg: #EDE5D2; --text: #2A2820; --muted: #6B6A55; --rule: #cfc4a8; --accent: #B98D55; }    /* Sand + Olive Gold */
+  .p6 { --bg: #F5F5F5; --text: #1A1A1A; --muted: #777; --rule: #c8c8c8; --accent: #444; }          /* Pure Neutral */
+  .p7 { --bg: #F5F1E8; --text: #2D3525; --muted: #5A6A4D; --rule: #d4cdb8; --accent: #8B6841; }    /* Hunter Green + Bronze */
+  .p8 { --bg: #F5F0E5; --text: #3E2F23; --muted: #7A6754; --rule: #d4c9b3; --accent: #C8A04E; }    /* Bone + Espresso + Gold */
+
+  @media (max-width: 760px) {
+    .hero { padding: 40px 28px 50px; }
+    .hero h1 { font-size: 46px; }
+    .hero .specs { grid-template-columns: repeat(2, 1fr); }
+    .meta-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <h1>SWISS TECHNICAL — COLOR PALETTES</h1>
+  <p>Same layout, same typography, eight different color combinations. Each works for a $10K precision rifle brand. Pick one (or mix two — "this palette but swap the accent for that one").</p>
+</div>
+
+<!-- 1 — BRONZE (the original Option A) -->
+<section class="direction">
+  <div class="direction-meta">
+    <div><div class="label">PALETTE 01</div><h2>BRONZE</h2></div>
+    <div class="note">Neutral and timeless. The safest, most universal pick. Lets the logo's natural bronze do the work.</div>
+  </div>
+  <div class="preview">
+    <div class="preview-stage">
+      <div class="hero p1">
+        <div class="grid-ruler"></div>
+        <div class="top-row">
+          <img class="logo-mark" src="assets/images/logo.png" alt="GT Accuracy" />
+          <div class="nav"><span>RIFLES</span><span>COMPONENTS</span><span>SHOP</span><span>CONTACT</span></div>
+          <div class="phone">+1 570 721 6550</div>
+        </div>
+        <h1>Precision,<br/>engineered to <span class="accent">exacting tolerance</span>.</h1>
+        <div class="sub">CUSTOM RIFLE WORKS — WYALUSING, PA — EST. 2009</div>
+        <div class="specs">
+          <div class="spec"><div class="spec-val">15+</div><div class="spec-lbl">YEARS</div></div>
+          <div class="spec"><div class="spec-val">.001"</div><div class="spec-lbl">TOLERANCE</div></div>
+          <div class="spec"><div class="spec-val">5</div><div class="spec-lbl">CNC MACHINES</div></div>
+          <div class="spec"><div class="spec-val">∞</div><div class="spec-lbl">DETAIL</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="swatches">
+      <div class="sw" style="background:#F5F5F5"></div><div class="sw" style="background:#c8c8c8"></div>
+      <div class="sw" style="background:#8B6841"></div><div class="sw" style="background:#555"></div>
+      <div class="sw" style="background:#111"></div>
+    </div>
+    <div class="meta-row">
+      <div><strong>BG</strong> #F5F5F5</div><div><strong>TEXT</strong> #111111</div>
+      <div><strong>ACCENT</strong> #8B6841</div><div><strong>VIBE</strong> Universal · Trustworthy</div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 — WALNUT + BRASS -->
+<section class="direction">
+  <div class="direction-meta">
+    <div><div class="label">PALETTE 02</div><h2>WALNUT &amp; BRASS</h2></div>
+    <div class="note">Heritage gun-shop colors made modern. Brass accent feels like a rifle's hardware. Warmest of the technical palettes.</div>
+  </div>
+  <div class="preview">
+    <div class="preview-stage">
+      <div class="hero p2">
+        <div class="grid-ruler"></div>
+        <div class="top-row">
+          <img class="logo-mark" src="assets/images/logo.png" alt="GT Accuracy" />
+          <div class="nav"><span>RIFLES</span><span>COMPONENTS</span><span>SHOP</span><span>CONTACT</span></div>
+          <div class="phone">+1 570 721 6550</div>
+        </div>
+        <h1>Precision,<br/>engineered to <span class="accent">exacting tolerance</span>.</h1>
+        <div class="sub">CUSTOM RIFLE WORKS — WYALUSING, PA — EST. 2009</div>
+        <div class="specs">
+          <div class="spec"><div class="spec-val">15+</div><div class="spec-lbl">YEARS</div></div>
+          <div class="spec"><div class="spec-val">.001"</div><div class="spec-lbl">TOLERANCE</div></div>
+          <div class="spec"><div class="spec-val">5</div><div class="spec-lbl">CNC MACHINES</div></div>
+          <div class="spec"><div class="spec-val">∞</div><div class="spec-lbl">DETAIL</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="swatches">
+      <div class="sw" style="background:#FAF7F0"></div><div class="sw" style="background:#d8cdb8"></div>
+      <div class="sw" style="background:#A88030"></div><div class="sw" style="background:#6B5A48"></div>
+      <div class="sw" style="background:#2A1E13"></div>
+    </div>
+    <div class="meta-row">
+      <div><strong>BG</strong> #FAF7F0</div><div><strong>TEXT</strong> #2A1E13</div>
+      <div><strong>ACCENT</strong> #A88030</div><div><strong>VIBE</strong> Heritage · Warm</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 — STEEL + COPPER -->
+<section class="direction">
+  <div class="direction-meta">
+    <div><div class="label">PALETTE 03</div><h2>STEEL &amp; COPPER</h2></div>
+    <div class="note">Aerospace / Beretta-blue technical. Coolest of the options. Feels like precision instruments and machined steel.</div>
+  </div>
+  <div class="preview">
+    <div class="preview-stage">
+      <div class="hero p3">
+        <div class="grid-ruler"></div>
+        <div class="top-row">
+          <img class="logo-mark" src="assets/images/logo.png" alt="GT Accuracy" />
+          <div class="nav"><span>RIFLES</span><span>COMPONENTS</span><span>SHOP</span><span>CONTACT</span></div>
+          <div class="phone">+1 570 721 6550</div>
+        </div>
+        <h1>Precision,<br/>engineered to <span class="accent">exacting tolerance</span>.</h1>
+        <div class="sub">CUSTOM RIFLE WORKS — WYALUSING, PA — EST. 2009</div>
+        <div class="specs">
+          <div class="spec"><div class="spec-val">15+</div><div class="spec-lbl">YEARS</div></div>
+          <div class="spec"><div class="spec-val">.001"</div><div class="spec-lbl">TOLERANCE</div></div>
+          <div class="spec"><div class="spec-val">5</div><div class="spec-lbl">CNC MACHINES</div></div>
+          <div class="spec"><div class="spec-val">∞</div><div class="spec-lbl">DETAIL</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="swatches">
+      <div class="sw" style="background:#F0F2F5"></div><div class="sw" style="background:#c4cad3"></div>
+      <div class="sw" style="background:#A56A36"></div><div class="sw" style="background:#5A6470"></div>
+      <div class="sw" style="background:#1C2530"></div>
+    </div>
+    <div class="meta-row">
+      <div><strong>BG</strong> #F0F2F5</div><div><strong>TEXT</strong> #1C2530</div>
+      <div><strong>ACCENT</strong> #A56A36</div><div><strong>VIBE</strong> Aerospace · Cool</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 — CHARCOAL + BURGUNDY -->
+<section class="direction">
+  <div class="direction-meta">
+    <div><div class="label">PALETTE 04</div><h2>CHARCOAL &amp; BURGUNDY</h2></div>
+    <div class="note">Mature, sophisticated. Burgundy accent is unusual for firearms — would make GT Accuracy stand out. Feels like a private wine cellar more than a gun shop.</div>
+  </div>
+  <div class="preview">
+    <div class="preview-stage">
+      <div class="hero p4">
+        <div class="grid-ruler"></div>
+        <div class="top-row">
+          <img class="logo-mark" src="assets/images/logo.png" alt="GT Accuracy" />
+          <div class="nav"><span>RIFLES</span><span>COMPONENTS</span><span>SHOP</span><span>CONTACT</span></div>
+          <div class="phone">+1 570 721 6550</div>
+        </div>
+        <h1>Precision,<br/>engineered to <span class="accent">exacting tolerance</span>.</h1>
+        <div class="sub">CUSTOM RIFLE WORKS — WYALUSING, PA — EST. 2009</div>
+        <div class="specs">
+          <div class="spec"><div class="spec-val">15+</div><div class="spec-lbl">YEARS</div></div>
+          <div class="spec"><div class="spec-val">.001"</div><div class="spec-lbl">TOLERANCE</div></div>
+          <div class="spec"><div class="spec-val">5</div><div class="spec-lbl">CNC MACHINES</div></div>
+          <div class="spec"><div class="spec-val">∞</div><div class="spec-lbl">DETAIL</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="swatches">
+      <div class="sw" style="background:#FAFAFA"></div><div class="sw" style="background:#d0d0d0"></div>
+      <div class="sw" style="background:#7E2F3D"></div><div class="sw" style="background:#555"></div>
+      <div class="sw" style="background:#1A1A1A"></div>
+    </div>
+    <div class="meta-row">
+      <div><strong>BG</strong> #FAFAFA</div><div><strong>TEXT</strong> #1A1A1A</div>
+      <div><strong>ACCENT</strong> #7E2F3D</div><div><strong>VIBE</strong> Mature · Unexpected</div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 — SAND + OLIVE GOLD -->
+<section class="direction">
+  <div class="direction-meta">
+    <div><div class="label">PALETTE 05</div><h2>SAND &amp; OLIVE GOLD</h2></div>
+    <div class="note">Outdoor heritage — natural sand tones with muted gold. Closest of all options to the actual logo's color story.</div>
+  </div>
+  <div class="preview">
+    <div class="preview-stage">
+      <div class="hero p5">
+        <div class="grid-ruler"></div>
+        <div class="top-row">
+          <img class="logo-mark" src="assets/images/logo.png" alt="GT Accuracy" />
+          <div class="nav"><span>RIFLES</span><span>COMPONENTS</span><span>SHOP</span><span>CONTACT</span></div>
+          <div class="phone">+1 570 721 6550</div>
+        </div>
+        <h1>Precision,<br/>engineered to <span class="accent">exacting tolerance</span>.</h1>
+        <div class="sub">CUSTOM RIFLE WORKS — WYALUSING, PA — EST. 2009</div>
+        <div class="specs">
+          <div class="spec"><div class="spec-val">15+</div><div class="spec-lbl">YEARS</div></div>
+          <div class="spec"><div class="spec-val">.001"</div><div class="spec-lbl">TOLERANCE</div></div>
+          <div class="spec"><div class="spec-val">5</div><div class="spec-lbl">CNC MACHINES</div></div>
+          <div class="spec"><div class="spec-val">∞</div><div class="spec-lbl">DETAIL</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="swatches">
+      <div class="sw" style="background:#EDE5D2"></div><div class="sw" style="background:#cfc4a8"></div>
+      <div class="sw" style="background:#B98D55"></div><div class="sw" style="background:#6B6A55"></div>
+      <div class="sw" style="background:#2A2820"></div>
+    </div>
+    <div class="meta-row">
+      <div><strong>BG</strong> #EDE5D2</div><div><strong>TEXT</strong> #2A2820</div>
+      <div><strong>ACCENT</strong> #B98D55</div><div><strong>VIBE</strong> Outdoor · Natural</div>
+    </div>
+  </div>
+</section>
+
+<!-- 6 — PURE NEUTRAL -->
+<section class="direction">
+  <div class="direction-meta">
+    <div><div class="label">PALETTE 06</div><h2>PURE NEUTRAL</h2></div>
+    <div class="note">No color at all — just shades of gray. Most minimalist. Trades warmth for clinical precision. Feels like a high-end optics company.</div>
+  </div>
+  <div class="preview">
+    <div class="preview-stage">
+      <div class="hero p6">
+        <div class="grid-ruler"></div>
+        <div class="top-row">
+          <img class="logo-mark" src="assets/images/logo.png" alt="GT Accuracy" />
+          <div class="nav"><span>RIFLES</span><span>COMPONENTS</span><span>SHOP</span><span>CONTACT</span></div>
+          <div class="phone">+1 570 721 6550</div>
+        </div>
+        <h1>Precision,<br/>engineered to <span class="accent">exacting tolerance</span>.</h1>
+        <div class="sub">CUSTOM RIFLE WORKS — WYALUSING, PA — EST. 2009</div>
+        <div class="specs">
+          <div class="spec"><div class="spec-val">15+</div><div class="spec-lbl">YEARS</div></div>
+          <div class="spec"><div class="spec-val">.001"</div><div class="spec-lbl">TOLERANCE</div></div>
+          <div class="spec"><div class="spec-val">5</div><div class="spec-lbl">CNC MACHINES</div></div>
+          <div class="spec"><div class="spec-val">∞</div><div class="spec-lbl">DETAIL</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="swatches">
+      <div class="sw" style="background:#F5F5F5"></div><div class="sw" style="background:#c8c8c8"></div>
+      <div class="sw" style="background:#777"></div><div class="sw" style="background:#444"></div>
+      <div class="sw" style="background:#1A1A1A"></div>
+    </div>
+    <div class="meta-row">
+      <div><strong>BG</strong> #F5F5F5</div><div><strong>TEXT</strong> #1A1A1A</div>
+      <div><strong>ACCENT</strong> #444</div><div><strong>VIBE</strong> Clinical · Minimalist</div>
+    </div>
+  </div>
+</section>
+
+<!-- 7 — HUNTER GREEN + BRONZE -->
+<section class="direction">
+  <div class="direction-meta">
+    <div><div class="label">PALETTE 07</div><h2>HUNTER GREEN &amp; BRONZE</h2></div>
+    <div class="note">Deep-woods feel without going kitschy. Dark green-tinted text on warm cream, bronze accent. Says "this rifle goes hunting."</div>
+  </div>
+  <div class="preview">
+    <div class="preview-stage">
+      <div class="hero p7">
+        <div class="grid-ruler"></div>
+        <div class="top-row">
+          <img class="logo-mark" src="assets/images/logo.png" alt="GT Accuracy" />
+          <div class="nav"><span>RIFLES</span><span>COMPONENTS</span><span>SHOP</span><span>CONTACT</span></div>
+          <div class="phone">+1 570 721 6550</div>
+        </div>
+        <h1>Precision,<br/>engineered to <span class="accent">exacting tolerance</span>.</h1>
+        <div class="sub">CUSTOM RIFLE WORKS — WYALUSING, PA — EST. 2009</div>
+        <div class="specs">
+          <div class="spec"><div class="spec-val">15+</div><div class="spec-lbl">YEARS</div></div>
+          <div class="spec"><div class="spec-val">.001"</div><div class="spec-lbl">TOLERANCE</div></div>
+          <div class="spec"><div class="spec-val">5</div><div class="spec-lbl">CNC MACHINES</div></div>
+          <div class="spec"><div class="spec-val">∞</div><div class="spec-lbl">DETAIL</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="swatches">
+      <div class="sw" style="background:#F5F1E8"></div><div class="sw" style="background:#d4cdb8"></div>
+      <div class="sw" style="background:#8B6841"></div><div class="sw" style="background:#5A6A4D"></div>
+      <div class="sw" style="background:#2D3525"></div>
+    </div>
+    <div class="meta-row">
+      <div><strong>BG</strong> #F5F1E8</div><div><strong>TEXT</strong> #2D3525</div>
+      <div><strong>ACCENT</strong> #8B6841</div><div><strong>VIBE</strong> Outdoor · Deep Woods</div>
+    </div>
+  </div>
+</section>
+
+<!-- 8 — BONE + ESPRESSO + GOLD -->
+<section class="direction">
+  <div class="direction-meta">
+    <div><div class="label">PALETTE 08</div><h2>BONE, ESPRESSO &amp; GOLD</h2></div>
+    <div class="note">Warmest paper-and-leather palette. Bone-white background, espresso-brown text, soft gold accent. Feels like a high-end gunmaker's catalog.</div>
+  </div>
+  <div class="preview">
+    <div class="preview-stage">
+      <div class="hero p8">
+        <div class="grid-ruler"></div>
+        <div class="top-row">
+          <img class="logo-mark" src="assets/images/logo.png" alt="GT Accuracy" />
+          <div class="nav"><span>RIFLES</span><span>COMPONENTS</span><span>SHOP</span><span>CONTACT</span></div>
+          <div class="phone">+1 570 721 6550</div>
+        </div>
+        <h1>Precision,<br/>engineered to <span class="accent">exacting tolerance</span>.</h1>
+        <div class="sub">CUSTOM RIFLE WORKS — WYALUSING, PA — EST. 2009</div>
+        <div class="specs">
+          <div class="spec"><div class="spec-val">15+</div><div class="spec-lbl">YEARS</div></div>
+          <div class="spec"><div class="spec-val">.001"</div><div class="spec-lbl">TOLERANCE</div></div>
+          <div class="spec"><div class="spec-val">5</div><div class="spec-lbl">CNC MACHINES</div></div>
+          <div class="spec"><div class="spec-val">∞</div><div class="spec-lbl">DETAIL</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="swatches">
+      <div class="sw" style="background:#F5F0E5"></div><div class="sw" style="background:#d4c9b3"></div>
+      <div class="sw" style="background:#C8A04E"></div><div class="sw" style="background:#7A6754"></div>
+      <div class="sw" style="background:#3E2F23"></div>
+    </div>
+    <div class="meta-row">
+      <div><strong>BG</strong> #F5F0E5</div><div><strong>TEXT</strong> #3E2F23</div>
+      <div><strong>ACCENT</strong> #C8A04E</div><div><strong>VIBE</strong> Catalog · Leather</div>
+    </div>
+  </div>
+</section>
+
+<div style="text-align:center;padding:50px 30px 70px;color:#888;font-size:13px;">
+  Pick a palette number (or say "01's bg + 03's accent" to mix). I'll rebuild the full site in that palette.
+</div>
+
+</body>
+</html>

@@ -97,3 +97,43 @@ document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
     else logoImg.addEventListener("load", applyPad);
   }
 })();
+
+// Ranch SWAG lightbox: click a swag card to open the zoomed product detail.
+(() => {
+  const lb       = document.getElementById("swag-lightbox");
+  if (!lb) return;
+  const lbImg    = document.getElementById("lb-img");
+  const lbName   = document.getElementById("lb-name");
+  const lbTag    = document.getElementById("lb-tag");
+  const lbDesc   = document.getElementById("lb-desc");
+  const lbPrice  = document.getElementById("lb-price");
+
+  function open(card) {
+    lbImg.src   = card.dataset.img;
+    lbImg.alt   = card.dataset.name || "";
+    lbName.textContent  = card.dataset.name  || "";
+    lbTag.textContent   = (card.dataset.tag || "").toUpperCase();
+    lbDesc.textContent  = card.dataset.desc  || "";
+    lbPrice.textContent = card.dataset.price || "";
+    lb.classList.add("open");
+    lb.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+  function close() {
+    lb.classList.remove("open");
+    lb.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  document.querySelectorAll(".swag-card").forEach(card => {
+    card.addEventListener("click", () => open(card));
+    card.setAttribute("tabindex", "0");
+    card.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(card); }
+    });
+  });
+  lb.querySelectorAll("[data-close]").forEach(el => el.addEventListener("click", close));
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && lb.classList.contains("open")) close();
+  });
+})();

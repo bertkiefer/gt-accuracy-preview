@@ -27,6 +27,7 @@
       <li><a href="#catalog">Catalog</a></li>
       <li><a href="#services">Services</a></li>
       <li><a href="#visit">Visit</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
     <a href="tel:5707216550" class="nav-phone">+1 570 721 6550</a>
   </div>
@@ -441,6 +442,64 @@
         referrerpolicy="no-referrer-when-downgrade">
       </iframe>
     </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ─────────────────────────────────── -->
+<section id="contact" class="contact reveal">
+  <div class="container">
+    <div class="section-head">
+      <div class="kicker">/ 07 — CONTACT</div>
+      <h2>Tell us what<br/>you're after.</h2>
+      <p class="lede">Whether you're spec'ing a competition build or just have a question about a barrel, drop us a line. We answer every message ourselves.</p>
+    </div>
+
+    <form class="contact-form" id="contact-form" novalidate>
+      <div class="form-grid">
+        <label class="field">
+          <span class="field-label">NAME *</span>
+          <input type="text" name="name" required autocomplete="name" />
+        </label>
+        <label class="field">
+          <span class="field-label">EMAIL *</span>
+          <input type="email" name="email" required autocomplete="email" />
+        </label>
+        <label class="field">
+          <span class="field-label">PHONE</span>
+          <input type="tel" name="phone" autocomplete="tel" />
+        </label>
+        <label class="field">
+          <span class="field-label">INTEREST</span>
+          <select name="interest">
+            <option value="">Choose one&hellip;</option>
+            <option>Benchrest build</option>
+            <option>F-Class build (F-Open / F-TR)</option>
+            <option>Hunting rifle</option>
+            <option>Predator / varmint rifle</option>
+            <option>Component &middot; barrel / action / stock</option>
+            <option>Gunsmithing service</option>
+            <option>Something else</option>
+          </select>
+        </label>
+        <label class="field field--full">
+          <span class="field-label">RIFLE / CALIBER / NOTES</span>
+          <textarea name="notes" rows="6" placeholder="e.g. 6mm Dasher F-Open build on a Borden BRMXD, Bartlein 7.83T 30&quot; HV, looking at a Lowrider XL stock&hellip;"></textarea>
+        </label>
+      </div>
+
+      <div class="form-bar">
+        <p class="form-meta">We typically reply within 24 hours.</p>
+        <button type="submit" class="form-submit">
+          Send message &nbsp;<span>&rarr;</span>
+        </button>
+      </div>
+
+      <div class="form-success" hidden>
+        <div class="kicker">/ MESSAGE RECEIVED</div>
+        <h3>Thanks &mdash; we'll be in touch.</h3>
+        <p>Your message is on its way to Greg. Expect a reply at the email you provided within 24 hours, usually faster.</p>
+      </div>
+    </form>
   </div>
 </section>
 

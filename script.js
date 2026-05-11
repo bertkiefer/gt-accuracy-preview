@@ -44,3 +44,36 @@ document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
   }
   window.addEventListener("scroll", onScroll, { passive: true });
 })();
+
+// Contact form: required-field validation + swap to success state on submit.
+// No backend wired yet — when you hook up Formspree / Netlify Forms / a Worker,
+// replace this block with a real fetch().
+(() => {
+  const form = document.getElementById("contact-form");
+  if (!form) return;
+  const successEl = form.querySelector(".form-success");
+  const grid = form.querySelector(".form-grid");
+  const bar = form.querySelector(".form-bar");
+
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    // Minimal required-field check
+    const name = form.elements.name.value.trim();
+    const email = form.elements.email.value.trim();
+    if (!name || !email || !/.+@.+\..+/.test(email)) {
+      // Briefly flash the offending fields
+      [form.elements.name, form.elements.email].forEach(f => {
+        if (!f.value.trim() || (f.type === "email" && !/.+@.+\..+/.test(f.value))) {
+          f.style.borderColor = "#b8462f";
+          setTimeout(() => { f.style.borderColor = ""; }, 1600);
+        }
+      });
+      return;
+    }
+    // Swap the form body for the success state
+    grid.style.display = "none";
+    bar.style.display = "none";
+    successEl.hidden = false;
+    successEl.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+})();

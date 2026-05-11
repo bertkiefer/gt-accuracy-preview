@@ -90,42 +90,18 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--rule);
-  overflow: visible;
 }
 .nav-inner {
   max-width: var(--maxw);
   margin: 0 auto;
-  padding: 18px 48px;
+  padding: 12px 48px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  overflow: visible;
 }
-.nav-brand {
-  position: relative;
-  height: 64px;        /* keeps nav at its original height */
-  width: 180px;        /* reserves horizontal space for the bigger logo */
-  flex-shrink: 0;
-  display: block;
-}
-.nav-brand img {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  height: 160px;       /* 2.5× the original 64px */
-  width: auto;
-  /* center on .nav-brand, then push down so half hangs below the nav */
-  transform: translateY(-50%);
-  margin-top: 50px;
-  z-index: 60;
-  filter: drop-shadow(0 6px 18px rgba(42, 30, 19, 0.35));
-  pointer-events: auto;
-}
-@media (max-width: 880px) {
-  .nav-brand { height: 48px; width: 130px; }
-  .nav-brand img { height: 120px; margin-top: 36px; }
-}
+.nav-brand img { height: 120px; width: auto; display: block; }
+@media (max-width: 880px) { .nav-brand img { height: 84px; } }
 .nav-links {
   display: flex;
   gap: 28px;

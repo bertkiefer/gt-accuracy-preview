@@ -383,6 +383,122 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 @media (max-width: 1000px) { .featured-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 560px)  { .featured-grid { grid-template-columns: 1fr; } }
 
+/* ── QUOTE CTA (slides in from bottom-right after scroll) ── */
+.quote-cta {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 320px;
+  background: linear-gradient(135deg, #2A1E13 0%, #1c130a 100%);
+  color: var(--bg);
+  padding: 22px 22px 20px;
+  border: 1px solid var(--accent);
+  border-radius: 2px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45),
+              0 0 0 1px rgba(168, 128, 48, 0.08);
+  z-index: 9000;
+  transform: translate(120%, 0);
+  opacity: 0;
+  transition: transform 0.55s cubic-bezier(.18, .89, .32, 1.18),
+              opacity 0.4s ease;
+  pointer-events: none;
+}
+.quote-cta.in {
+  transform: translate(0, 0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.quote-cta.dismissed { display: none; }
+
+.quote-cta .kicker {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.quote-cta h4 {
+  font-family: "Inter Tight", "Inter", sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin: 0 0 6px;
+  color: var(--bg);
+}
+.quote-cta p {
+  font-size: 13px;
+  line-height: 1.45;
+  color: rgba(250, 247, 240, 0.7);
+  margin: 0 0 16px;
+}
+.quote-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  justify-content: center;
+  padding: 12px 18px;
+  background: var(--accent);
+  color: var(--text);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+.quote-cta-btn:hover {
+  background: #C99A45;
+  transform: translateY(-1px);
+}
+.quote-cta-btn span { transition: transform 0.2s; }
+.quote-cta-btn:hover span { transform: translateX(3px); }
+
+.quote-cta-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: rgba(250, 247, 240, 0.5);
+  font-size: 18px;
+  line-height: 1;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  transition: color 0.15s;
+  padding: 0;
+}
+.quote-cta-close:hover { color: var(--bg); }
+
+/* Attention pulse (runs once after entry) */
+@keyframes quoteCtaPulse {
+  0%, 100% { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45),
+                        0 0 0 1px rgba(168, 128, 48, 0.08); }
+  50%      { box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45),
+                        0 0 0 6px rgba(168, 128, 48, 0.18); }
+}
+.quote-cta.pulse {
+  animation: quoteCtaPulse 1.4s ease-in-out 2;
+}
+
+@media (max-width: 560px) {
+  .quote-cta {
+    right: 12px;
+    bottom: 12px;
+    left: 12px;
+    width: auto;
+    padding: 18px 18px 16px;
+  }
+  .quote-cta h4 { font-size: 19px; }
+}
+
 /* ── CATALOG PAGE HERO (catalog.html) ────────── */
 .catalog-hero {
   padding: 180px 0 60px;

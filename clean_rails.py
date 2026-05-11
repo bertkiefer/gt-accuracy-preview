@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Aggressive cleanup for the Borden rail images.
-Strategy: rembg with alpha matting → composite on white → threshold residual
-near-whites to pure #FFFFFF. The subject is essentially black so this is safe."""
+"""Pure-threshold cleanup for the Borden rail images.
+The rails are essentially pure black (brightness < 50). The gray shadow
+between them is 100-180 brightness. A 130-threshold cleans the shadow
+completely while leaving the rails intact."""
 import os
-import shutil
 from PIL import Image
-from rembg import remove, new_session
 
 SHOP_DIR = "assets/images/shop"
 BACKUP_DIR = "assets/images/shop_originals"
@@ -15,46 +14,30 @@ TARGETS = [
     "Borden-Rem700_Rail.webp",
 ]
 
-session = new_session("u2net")
+THRESHOLD = 130  # mean(R,G,B) > THRESHOLD → snap to pure white
 
 
-def clean(src, dst):
-    img = Image.open(src).convert("RGBA")
-    # Aggressive rembg: alpha matting with tight thresholds
-    out = remove(
-        img,
-        session=session,
-        alpha_matting=True,
-        alpha_matting_foreground_threshold=240,
-        alpha_matting_background_threshold=10,
-        alpha_matting_erode_size=10,
-    )
-    # Composite onto pure white
-    white = Image.new("RGB", out.size, (255, 255, 255))
-    if out.mode == "RGBA":
-        white.paste(out, mask=out.split()[3])
-    else:
-        white.paste(out.convert("RGB"))
-
-    # Post-threshold: any near-white pixel → pure white. Subject is black
-    # so this only cleans residual halos / soft shadows.
-    px = white.load()
-    w, h = white.size
+def threshold_clean(src, dst):
+    img = Image.open(src).convert("RGB")
+    w, h = img.size
+    px = img.load()
+    cleaned = 0
     for y in range(h):
         for x in range(w):
             r, g, b = px[x, y]
-            if (r + g + b) / 3 > 180:
+            if (r + g + b) / 3 > THRESHOLD:
                 px[x, y] = (255, 255, 255)
-
+                cleaned += 1
     ext = os.path.splitext(dst)[1].lower()
     if ext in (".jpg", ".jpeg"):
-        white.save(dst, "JPEG", quality=92)
+        img.save(dst, "JPEG", quality=92)
     elif ext == ".webp":
-        white.save(dst, "WEBP", quality=92)
+        img.save(dst, "WEBP", quality=92)
     elif ext == ".png":
-        white.save(dst, "PNG")
+        img.save(dst, "PNG")
     else:
-        white.save(dst)
+        img.save(dst)
+    return cleaned, w * h
 
 
 for name in TARGETS:
@@ -63,5 +46,6 @@ for name in TARGETS:
     if not os.path.exists(src):
         print(f"  ✗ missing original: {name}")
         continue
-    clean(src, dst)
-    print(f"  ✓ {name:40s} cleaned")
+    cleaned, total = threshold_clean(src, dst)
+    pct = 100 * cleaned / total
+    print(f"  ✓ {name:35s} {cleaned}/{total} px → white ({pct:.1f}%)")

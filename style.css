@@ -280,7 +280,7 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 }
 
 /* ── SHOP ────────────────────────────────────── */
-.shop { padding: 120px 0; }
+.shop { padding: 64px 0; }
 .shop h2 { margin-bottom: 24px; }
 .shop p { color: var(--muted); margin-bottom: 16px; font-size: 16px; max-width: 540px; }
 .shop-img {
@@ -310,7 +310,7 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 
 /* ── DISCIPLINES ─────────────────────────────── */
 .build {
-  padding: 120px 0;
+  padding: 64px 0;
   background: var(--bg-2);
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
@@ -380,7 +380,7 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 }
 
 /* ── FEATURED ────────────────────────────────── */
-.featured { padding: 120px 0; }
+.featured { padding: 64px 0; }
 .featured-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -541,7 +541,7 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 
 /* ── CATALOG PAGE HERO (catalog.html) ────────── */
 .catalog-hero {
-  padding: 180px 0 60px;
+  padding: 120px 0 48px;
   background: var(--bg-2);
   border-bottom: 1px solid var(--rule);
 }
@@ -616,7 +616,7 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 }
 
 /* ── CATALOG ─────────────────────────────────── */
-.catalog { padding: 120px 0; }
+.catalog { padding: 64px 0; }
 .catalog-group { margin-top: 56px; }
 .catalog-group:first-of-type { margin-top: 40px; }
 .group-head {
@@ -718,7 +718,7 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 
 /* ── SERVICES ────────────────────────────────── */
 .services {
-  padding: 120px 0;
+  padding: 64px 0;
   background: var(--bg-2);
   border-top: 1px solid var(--rule);
   border-bottom: 1px solid var(--rule);
@@ -750,7 +750,7 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 }
 
 /* ── TESTIMONIALS ────────────────────────────── */
-.testimonials { padding: 120px 0; }
+.testimonials { padding: 64px 0; }
 .quote-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -781,7 +781,7 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 
 /* ── VISIT ───────────────────────────────────── */
 .visit {
-  padding: 120px 0;
+  padding: 64px 0;
   background: var(--bg-2);
   border-top: 1px solid var(--rule);
 }
@@ -803,7 +803,7 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 
 /* ── CONTACT FORM ────────────────────────────── */
 .contact {
-  padding: 120px 0;
+  padding: 64px 0;
   background: var(--bg-2);
   border-top: 1px solid var(--rule);
 }

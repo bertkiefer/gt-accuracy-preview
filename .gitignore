@@ -1,0 +1,4 @@
+assets/images/shop_originals/
+.DS_Store
+__pycache__/
+*.pyc

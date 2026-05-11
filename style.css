@@ -1035,6 +1035,39 @@ h3 { font-size: 20px; letter-spacing: -0.01em; }
 @keyframes lbFade  { from { opacity: 0; } to { opacity: 1; } }
 @keyframes lbZoom  { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: scale(1); } }
 
+/* Fullscreen state — image fills the viewport, info panel slides away */
+.swag-lightbox.fullscreen .lb-frame {
+  grid-template-columns: 1fr;
+  max-width: 100vw;
+  width: 100vw;
+  max-height: 100vh;
+  height: 100vh;
+  border-radius: 0;
+  border: none;
+  transition: max-width 0.3s ease, width 0.3s ease, max-height 0.3s ease;
+}
+.swag-lightbox.fullscreen .lb-image {
+  padding: 24px;
+  min-height: 0;
+  height: 100vh;
+}
+.swag-lightbox.fullscreen .lb-image img {
+  max-height: calc(100vh - 48px);
+  max-width: calc(100vw - 48px);
+}
+.swag-lightbox.fullscreen .lb-info {
+  display: none;
+}
+.swag-lightbox.fullscreen .lb-close {
+  background: rgba(28, 19, 10, 0.85);
+  width: 44px;
+  height: 44px;
+  border-radius: 4px;
+  top: 16px;
+  right: 16px;
+  font-size: 30px;
+}
+
 @media (max-width: 800px) {
   .lb-frame { grid-template-columns: 1fr; max-height: 92vh; }
   .lb-image { min-height: 240px; padding: 18px; }

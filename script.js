@@ -134,6 +134,20 @@ document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
   });
   lb.querySelectorAll("[data-close]").forEach(el => el.addEventListener("click", close));
   document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && lb.classList.contains("open")) close();
+    if (e.key === "Escape" && lb.classList.contains("open")) {
+      if (lb.classList.contains("fullscreen")) lb.classList.remove("fullscreen");
+      else close();
+    }
   });
+
+  // Click the image inside the lightbox → toggle full-screen view
+  const imgWrap = lb.querySelector(".lb-image");
+  if (imgWrap) {
+    imgWrap.style.cursor = "zoom-in";
+    imgWrap.addEventListener("click", e => {
+      e.stopPropagation();
+      lb.classList.toggle("fullscreen");
+      imgWrap.style.cursor = lb.classList.contains("fullscreen") ? "zoom-out" : "zoom-in";
+    });
+  }
 })();

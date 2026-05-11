@@ -34,18 +34,19 @@ def has_white_bg(img, threshold=235):
     return avg > threshold
 
 
+FORCE_ALL = True  # process every non-logo image, ignore the "already white" detector
+
 def mask_one(path):
     name = os.path.basename(path)
     if name in SKIP_NAMES:
         return "skipped-logo"
     try:
         img = Image.open(path)
-        # Pad small images for better masking
         img.load()
     except Exception as e:
         return f"err-open: {e}"
 
-    if has_white_bg(img):
+    if not FORCE_ALL and has_white_bg(img, threshold=252):
         return "skipped-already-white"
 
     # Backup original once

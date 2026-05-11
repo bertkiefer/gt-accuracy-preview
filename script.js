@@ -77,3 +77,23 @@ document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
     successEl.scrollIntoView({ behavior: "smooth", block: "center" });
   });
 })();
+
+// Match scroll-padding-top to the actual rendered nav height so anchor jumps
+// always land below the sticky nav, no matter the logo size or viewport.
+(() => {
+  const nav = document.querySelector(".nav");
+  if (!nav) return;
+  function applyPad() {
+    const h = nav.getBoundingClientRect().height;
+    document.documentElement.style.scrollPaddingTop = (h + 16) + "px";
+  }
+  applyPad();
+  window.addEventListener("resize", applyPad, { passive: true });
+  window.addEventListener("load", applyPad);
+  // Also recompute after the logo image decodes (its height drives the nav height)
+  const logoImg = nav.querySelector("img");
+  if (logoImg) {
+    if (logoImg.complete) applyPad();
+    else logoImg.addEventListener("load", applyPad);
+  }
+})();

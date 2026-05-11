@@ -1,3 +1,4 @@
+try { sessionStorage.removeItem("quoteCtaDismissed"); } catch(e) {}
 // Scroll-reveal: add .in to .reveal sections as they enter the viewport
 const observer = new IntersectionObserver(
   entries => {
@@ -13,11 +14,11 @@ const observer = new IntersectionObserver(
 document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
 
 // Quote CTA: slides in from bottom-right after the user scrolls past the hero,
-// has a one-time attention pulse, and can be dismissed for the session.
+// has a one-time attention pulse, and can be dismissed for this page view only
+// (any reload brings it back — important for a pitch/demo site).
 (() => {
   const cta = document.querySelector(".quote-cta");
   if (!cta) return;
-  if (sessionStorage.getItem("quoteCtaDismissed") === "1") return;
 
   const closeBtn = cta.querySelector(".quote-cta-close");
   if (closeBtn) {
@@ -25,7 +26,6 @@ document.querySelectorAll(".reveal").forEach(el => observer.observe(el));
       e.preventDefault();
       cta.classList.remove("in", "pulse");
       cta.classList.add("dismissed");
-      sessionStorage.setItem("quoteCtaDismissed", "1");
     });
   }
 
